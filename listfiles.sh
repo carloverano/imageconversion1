@@ -4,6 +4,7 @@ while read -r line; do
 ./parsefile.sh $line; 
 
 done
+
 rm tmp*
 rm *.jpg
 rm *.tif
