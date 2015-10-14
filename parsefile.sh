@@ -26,6 +26,26 @@ fi
 
 echo _$fil"____________________________"
 
+if [ $(basename "$fil" "-H.jpg") != $(basename "$fil") ] 
+then
+echo $(basename "$fil" ) $(basename "$fil" "-H.jpg") " this is  H: ignored"
+exit
+fi
+if [ $(basename "$fil" "-L.jpg") != $(basename "$fil") ] 
+then
+echo $(basename "$fil" ) " this is  L: ignored"
+exit
+fi
+if [ $(basename "$fil" "-S.jpg") != $(basename "$fil") ] 
+then
+echo $(basename "$fil" ) " this is  S: ignored"
+exit
+fi
+if [ $(basename "$fil" "-M.jpg") != $(basename "$fil") ] 
+then
+echo $(basename "$fil" ) " this is  M: ignored"
+exit
+fi
 
 #processing filenames
 extension="${fil##*.}";
@@ -56,7 +76,7 @@ convert  -resize 50%% -filter Lanczos	 -interpolate filter -strip  -quality %2  
 if [ -f $fbname-L.$extension ] 
 then 
 echo "sending : " s3://$S3dir/$dirna$fbname-L.$extension 
-aws s3 cp ./$fbname-L.$extension s3://$S3dir/$dirna$fbname-L.$extension --metadata-directive --expires 2100-01-01T00:00:00Z --acl public-read --cache-control max-age=2592000,public
+aws s3 cp ./$fbname-L.$extension s3://$S3dir/$dirna$fbname-L.$extension --metadata-directive REPLACE --expires 2100-01-01T00:00:00Z --acl public-read --cache-control max-age=2592000,public
 else 
 echo "Failed converting " $fbname-L.$extension 
 fi
@@ -66,7 +86,7 @@ convert  -resize 31% -filter Lanczos -interpolate filter -strip  -quality $2  -d
 if [ -f $fbname-M.$extension ] 
 then 
 echo "sending : " s3://$S3dir/$dirna$fbname-M.$extension 
-aws s3 cp ./$fbname-L.$extension s3://$S3dir/$dirna$fbname-M.$extension --metadata-directive --expires 2100-01-01T00:00:00Z --acl public-read --cache-control max-age=2592000,public
+aws s3 cp ./$fbname-L.$extension s3://$S3dir/$dirna$fbname-M.$extension --metadata-directive REPLACE --expires 2100-01-01T00:00:00Z --acl public-read --cache-control max-age=2592000,public
 else
 echo "Failed converting " $fbname-M.$extension 
 fi
@@ -76,7 +96,7 @@ convert  -resize 24% -filter Lanczos -interpolate filter -strip  -quality $2  -d
 if [ -f $fbname-S.$extension ] 
 then 
 echo "sending : " s3://$S3dir/$dirna$fbname-S.$extension 
-aws s3 cp ./$fbname-L.$extension s3://$S3dir/$dirna$fbname-S.$extension --metadata-directive --expires 2100-01-01T00:00:00Z --acl public-read --cache-control max-age=2592000,public
+aws s3 cp ./$fbname-L.$extension s3://$S3dir/$dirna$fbname-S.$extension --metadata-directive REPLACE --expires 2100-01-01T00:00:00Z --acl public-read --cache-control max-age=2592000,public
 else
 echo "Failed converting " $fbname-S.$extension 
 fi
